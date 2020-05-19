@@ -27,12 +27,16 @@ steps:
 
 # tests should go here
 
-- task: conficient.VersionReaderTask.version-reader-build-task.VersionReaderTask@2
+#####################################################
+# Call VersionReaderTask to set environment variables
+#####################################################
+- task: VersionReaderTask@2
   displayName: 'Generate build variables'
   inputs:
     searchPattern: '$(project)'
     variablesPrefix: 'DEMO'
     buildPrefix: '.'
+#####################################################
 
 - task: DotNetCoreCLI@2
   displayName: Pack
