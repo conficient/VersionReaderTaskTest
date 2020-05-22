@@ -1,0 +1,45 @@
+# test using VersionReaderTask on windows build server
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'Any CPU'
+  buildConfiguration: 'Release'
+  project: 'VersionReaderTaskTest/VersionReaderTaskTest.csproj'
+
+steps:
+
+- task: UseDotNet@2
+  displayName: 'Load SDK using 3.1.x'
+  inputs:
+    version: 3.1.x
+
+- task: DotNetCoreCLI@2
+  displayName: Build solution
+  inputs:
+    projects: '$(solution)'
+    arguments: '--configuration $(BuildConfiguration)'
+
+# tests should go here
+
+- task: conficient.VersionReaderTask.version-reader-build-task.VersionReaderTask@2
+  displayName: 'Generate build variables'
+  inputs:
+    searchPattern: '$(project)'
+    variablesPrefix: 'DEMO'
+    buildPrefix: '.'
+
+- task: DotNetCoreCLI@2
+  displayName: Pack
+  inputs:
+    command: pack
+    packagesToPack: '$(project)'
+    versioningScheme: byEnvVar
+    versionEnvVar: 'DEMO_VERSION_BUILD'
+
+# could use 'dotnet push' to push .nupkg here
