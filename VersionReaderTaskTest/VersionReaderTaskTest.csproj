@@ -4,6 +4,11 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Version>1.0.1</Version>
+    <VersionPrefix>1.0.2</VersionPrefix>
+    <VersionSuffix>alpha</VersionSuffix>
+    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <PackageVersion>1.0.4</PackageVersion>
+    <FileVersion>1.0.5</FileVersion>
     <PackageReleaseNotes>A test project to ensure VersionReaderTask is working</PackageReleaseNotes>
   </PropertyGroup>
 
